@@ -184,9 +184,12 @@ const API = 'https://unipath-backend-bjou.onrender.com';
   /* vibes */
   .vgrid{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
   @media(min-width:540px){.vgrid{gap:.75rem}}
+  @media(max-width:520px){.vgrid{grid-template-columns:1fr}}
   .l4actions{padding-top:.75rem}
   @media(max-width:520px){
-    .l4actions{position:sticky;bottom:0;padding:.6rem 0 max(.75rem,env(safe-area-inset-bottom));background:linear-gradient(to bottom,transparent,var(--cream) 28%);z-index:50}
+    .l2actions{position:sticky;bottom:0;padding:.6rem 0 max(.75rem,env(safe-area-inset-bottom));background:linear-gradient(to bottom,transparent,rgba(124,58,237,.2));z-index:50}
+    .l3bot{position:sticky;bottom:0;padding:.75rem 0 max(.75rem,env(safe-area-inset-bottom));background:linear-gradient(to bottom,transparent,rgba(217,119,6,.2));z-index:50;display:flex;gap:.75rem;justify-content:center}
+    .l4actions{position:sticky;bottom:0;padding:.6rem 0 max(.75rem,env(safe-area-inset-bottom));background:linear-gradient(to bottom,transparent,rgba(2,132,199,.2));z-index:50}
   }
   .vcard{display:flex;align-items:flex-start;gap:.9rem;padding:1rem;border:2px solid var(--ink);border-radius:var(--rs);background:var(--cream);cursor:pointer;text-align:left;transition:transform .15s ease-out, box-shadow .15s ease-out, background .2s ease-out, border-color .2s ease-out;box-shadow:var(--s1)}
   .vcard:hover:not(:disabled){transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--ink)}
@@ -697,6 +700,8 @@ export default function App() {
                 </button>
               ))}
             </div>
+          </div>
+          <div className="l2actions">
             <button className="btn violet" disabled={selectedTier===null} onClick={confirmL2}>
               <span>Confirm</span><span>→</span>
             </button>
@@ -743,7 +748,7 @@ export default function App() {
           </div>
           {l3Index===0&&<div className="swhint">← drag the card →</div>}
 
-          <div style={{display:'flex',gap:'.75rem',marginTop:'1.5rem',justifyContent:'center'}}>
+          <div className="l3bot">
             <div style={{background:'#FFF0F0',border:'2px solid var(--rose)',borderRadius:'10px',padding:'.4rem 1rem',fontSize:'.72rem',fontWeight:800,color:'var(--rose)',boxShadow:'2px 2px 0 rgba(225,29,72,.3)'}}>✗ {drainsBucket.length}</div>
             <div style={{background:'#F0FDF4',border:'2px solid var(--lime)',borderRadius:'10px',padding:'.4rem 1rem',fontSize:'.72rem',fontWeight:800,color:'var(--lime)',boxShadow:'2px 2px 0 rgba(101,163,13,.3)'}}>✓ {energyBucket.length}</div>
           </div>
