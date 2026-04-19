@@ -54,9 +54,8 @@ const API = 'https://unipath-backend-bjou.onrender.com';
   html::after{content:'';position:fixed;top:-240px;right:-280px;width:800px;height:800px;border-radius:50%;background:radial-gradient(circle,rgba(124,58,237,0.22) 0%,transparent 68%);pointer-events:none;filter:blur(55px);animation:drift2 28s ease-in-out infinite;z-index:0}
   body::after{content:'';position:fixed;bottom:-280px;left:50%;width:750px;height:750px;border-radius:50%;background:radial-gradient(circle,rgba(217,119,6,0.21) 0%,transparent 68%);pointer-events:none;filter:blur(65px);animation:drift3 26s ease-in-out infinite;z-index:0}
 
-  /* dot grid */
-  body::before{
-    content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  /* dot grid — on body directly so iOS overscroll is covered too */
+  body{
     background-image:radial-gradient(circle,rgba(26,18,8,0.08) 1.5px,transparent 1.5px);
     background-size:28px 28px;
   }
@@ -115,10 +114,10 @@ const API = 'https://unipath-backend-bjou.onrender.com';
   .cbtn.no:hover{background:var(--rose);color:#fff;border-color:var(--rose);box-shadow:4px 4px 0 #7f1134}
 
   /* flip card */
-  .flipwrap{perspective:1200px;width:100%}
-  .flipinner{position:relative;transform-style:preserve-3d;transition:transform .55s cubic-bezier(.4,0,.2,1)}
+  .flipwrap{perspective:1200px;width:100%;overflow:hidden}
+  .flipinner{position:relative;transform-style:preserve-3d;-webkit-transform-style:preserve-3d;transition:transform .45s cubic-bezier(.4,0,.2,1);will-change:transform}
   .flipinner.flipped{transform:rotateY(180deg)}
-  .flipfront{backface-visibility:hidden;-webkit-backface-visibility:hidden;background:var(--paper);border:2px solid var(--ink);border-radius:var(--r);box-shadow:var(--s3);padding:2.25rem 2rem}
+  .flipfront{backface-visibility:hidden;-webkit-backface-visibility:hidden;transform:rotateY(0deg);background:var(--paper);border:2px solid var(--ink);border-radius:var(--r);box-shadow:var(--s3);padding:2.25rem 2rem}
   .flipback{position:absolute;top:0;left:0;width:100%;min-height:100%;backface-visibility:hidden;-webkit-backface-visibility:hidden;transform:rotateY(180deg);background:var(--paper);border:2px solid var(--ink);border-radius:var(--r);box-shadow:var(--s3);padding:2.25rem 2rem}
 
   /* responsive layouts */
@@ -126,6 +125,21 @@ const API = 'https://unipath-backend-bjou.onrender.com';
   @media(max-width:520px){.l1grid{grid-template-columns:1fr}}
   .tbtns{display:flex;gap:.6rem;margin-bottom:1.5rem}
   @media(max-width:480px){.tbtns{flex-direction:column}}
+
+  /* mobile compactness */
+  @media(max-width:520px){
+    .card{padding:1.5rem 1.2rem}
+    .dwrap{padding:2rem 1.5rem}
+    .dtitle{font-size:1.6rem}
+    .vcard{padding:.7rem .6rem;gap:.6rem}
+    .vi{font-size:1.5rem}
+    .vd{font-size:.72rem}
+    .pslot{width:auto !important;flex:1;min-height:68px;padding:.45rem .2rem}
+    .pi{font-size:1.25rem}
+    .pn{font-size:.5rem}
+    .ptier{gap:.4rem}
+    .flipfront,.flipback{padding:1.75rem 1.25rem}
+  }
 
   /* tier buttons L2 */
   .tbtn{flex:1;padding:.9rem .6rem;border:2px solid var(--ink);border-radius:var(--rs);background:var(--cream);color:var(--ink);font-family:var(--ff-b);font-size:.82rem;font-weight:700;cursor:pointer;text-align:center;transition:transform .15s ease-out, box-shadow .15s ease-out, background .2s ease-out, color .2s ease-out, border-color .2s ease-out;box-shadow:var(--s1);line-height:1.3}
@@ -226,8 +240,9 @@ const API = 'https://unipath-backend-bjou.onrender.com';
 
   /* float shapes */
   .fshape{position:fixed;pointer-events:none;z-index:0;border:2.5px solid var(--ink)}
+  .fshape-m{display:none}
   @keyframes floatY{0%,100%{transform:translateY(0) rotate(var(--rot,0deg))}50%{transform:translateY(-18px) rotate(var(--rot,0deg))}}
-  @media(max-width:860px){.fshape{display:none}}
+  @media(max-width:860px){.fshape:not(.fshape-m){display:none}.fshape-m{display:block}}
 
   /* fade-up */
   @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
@@ -273,20 +288,30 @@ const API = 'https://unipath-backend-bjou.onrender.com';
   document.head.appendChild(s);
 })();
 
-const S = (p) => <div className="fshape" style={{animation:`floatY ${p.dur||4}s ease-in-out infinite`,animationDelay:`${p.delay||0}s`,'--rot':p.rot||'0deg',width:p.size||28,height:p.size||28,borderRadius:p.circle?'50%':p.rot==='45deg'?'3px':'4px',borderColor:`var(--${p.c||'ink'})`,...p.pos}}/>;
+const S = (p) => <div className={`fshape${p.mob?' fshape-m':''}`} style={{animation:`floatY ${p.dur||4}s ease-in-out infinite`,animationDelay:`${p.delay||0}s`,'--rot':p.rot||'0deg',width:p.size||28,height:p.size||28,borderRadius:p.circle?'50%':p.rot==='45deg'?'3px':'4px',borderColor:`var(--${p.c||'ink'})`,...p.pos}}/>;
 
 const Shapes = () => (
   <>
-    <S circle size={30} c="coral"  pos={{top:'10%', left:'3%'}}  dur={4.2} delay={0}  />
-    <S        size={24} c="violet" pos={{top:'32%', left:'5%'}}  dur={5.5} delay={0.8} rot="18deg"/>
-    <S        size={20} c="amber"  pos={{top:'55%', left:'2.5%'}}dur={3.8} delay={1.5} rot="45deg"/>
-    <S circle size={18} c="sky"    pos={{top:'76%', left:'6%'}}  dur={4.8} delay={0.4} />
-    <S        size={22} c="lime"   pos={{top:'88%', left:'3.5%'}}dur={5.2} delay={1.1} rot="45deg"/>
-    <S        size={26} c="violet" pos={{top:'8%',  right:'3%'}} dur={4.5} delay={0.6} rot="45deg"/>
-    <S circle size={22} c="coral"  pos={{top:'28%', right:'5%'}} dur={3.6} delay={1.3} />
+    {/* Desktop: side margin shapes */}
+    <S circle size={30} c="coral"  pos={{top:'10%', left:'3%'}}   dur={4.2} delay={0}   />
+    <S        size={24} c="violet" pos={{top:'32%', left:'5%'}}   dur={5.5} delay={0.8} rot="18deg"/>
+    <S        size={20} c="amber"  pos={{top:'55%', left:'2.5%'}} dur={3.8} delay={1.5} rot="45deg"/>
+    <S circle size={18} c="sky"    pos={{top:'76%', left:'6%'}}   dur={4.8} delay={0.4} />
+    <S        size={22} c="lime"   pos={{top:'88%', left:'3.5%'}} dur={5.2} delay={1.1} rot="45deg"/>
+    <S        size={26} c="violet" pos={{top:'8%',  right:'3%'}}  dur={4.5} delay={0.6} rot="45deg"/>
+    <S circle size={22} c="coral"  pos={{top:'28%', right:'5%'}}  dur={3.6} delay={1.3} />
     <S        size={28} c="sky"    pos={{top:'52%', right:'2.5%'}}dur={5.0} delay={0.2} rot="12deg"/>
-    <S circle size={20} c="lime"   pos={{top:'72%', right:'6%'}} dur={4.1} delay={1.7} />
+    <S circle size={20} c="lime"   pos={{top:'72%', right:'6%'}}  dur={4.1} delay={1.7} />
     <S        size={24} c="amber"  pos={{top:'86%', right:'3.5%'}}dur={4.7} delay={0.9} rot="45deg"/>
+    {/* Mobile: peek from edges */}
+    <S mob circle size={54} c="coral"  pos={{top:'5%',    left:'-16px'}}  dur={4.2} delay={0}   />
+    <S mob        size={42} c="violet" pos={{top:'20%',   right:'-14px'}} dur={5.5} delay={0.8} rot="20deg"/>
+    <S mob circle size={38} c="sky"    pos={{top:'40%',   left:'-13px'}}  dur={3.8} delay={1.5} />
+    <S mob        size={46} c="lime"   pos={{top:'60%',   right:'-15px'}} dur={4.5} delay={1.1} rot="45deg"/>
+    <S mob circle size={40} c="amber"  pos={{top:'78%',   left:'-13px'}}  dur={5.0} delay={0.4} />
+    <S mob        size={36} c="rose"   pos={{bottom:'5%', right:'-12px'}} dur={4.0} delay={0.9} rot="25deg"/>
+    <S mob        size={30} c="violet" pos={{top:'13%',   right:'10%'}}   dur={4.8} delay={1.3} rot="45deg"/>
+    <S mob circle size={26} c="coral"  pos={{bottom:'18%',right:'8%'}}    dur={3.6} delay={0.2} />
   </>
 );
 
@@ -648,7 +673,7 @@ export default function App() {
           <div style={{position:'relative',width:'100%',maxWidth:'420px',marginBottom:'1.75rem'}}>
             <div key={l3Index}
               className={swipeDir==='left'?'swl':swipeDir==='right'?'swr':''}
-              style={{background:'linear-gradient(160deg,#FFFBF0,#FFF3D0)',border:'2px solid rgba(217,119,6,.45)',borderRadius:'var(--r)',boxShadow:'6px 6px 0 rgba(217,119,6,.22)',padding:'3.5rem 2rem',textAlign:'center',transform:swipeDir?'':dragX?`translateX(${dragX}px) rotate(${dragX/18}deg)`:'',cursor:'grab',userSelect:'none',transition:swipeDir||isDragging.current?'none':'transform .3s ease-out'}}
+              style={{background:'linear-gradient(160deg,#FFFBF0,#FFF3D0)',border:'2px solid rgba(217,119,6,.45)',borderRadius:'var(--r)',boxShadow:'6px 6px 0 rgba(217,119,6,.22)',padding:'clamp(2rem,8vw,3.5rem) clamp(1.25rem,5vw,2rem)',textAlign:'center',transform:swipeDir?'':dragX?`translateX(${dragX}px) rotate(${dragX/18}deg)`:'',cursor:'grab',userSelect:'none',transition:swipeDir||isDragging.current?'none':'transform .3s ease-out'}}
               onTouchStart={e=>{if(swipeDir)return;touchStartX.current=e.touches[0].clientX;isDragging.current=true;}}
               onTouchMove={e=>{if(!isDragging.current||swipeDir)return;setDragX(e.touches[0].clientX-touchStartX.current);}}
               onTouchEnd={()=>{if(!isDragging.current)return;isDragging.current=false;if(Math.abs(dragX)>80){handleL3Swipe(dragX>0);}setDragX(0);}}
