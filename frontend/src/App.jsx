@@ -148,12 +148,13 @@ const API = 'https://unipath-backend-bjou.onrender.com';
     .card{padding:1.5rem 1.2rem}
     .dwrap{padding:2rem 1.5rem}
     .dtitle{font-size:1.6rem}
-    .vgrid{grid-template-columns:1fr}
-    .vcard{padding:.55rem .65rem;gap:.45rem}
-    .vi{font-size:1.3rem;flex-shrink:0}
-    .vn{font-size:.75rem;margin-bottom:.1rem}
-    .vd{font-size:.68rem;line-height:1.35}
-    .vchip{font-size:.6rem;padding:.12rem .35rem;border-width:1.5px}
+    .vgrid{gap:.35rem}
+    .vcard{padding:.45rem .5rem;gap:.3rem;box-shadow:2px 2px 0 var(--ink)}
+    .vcard.sel{box-shadow:3px 3px 0 var(--violet)}
+    .vi{font-size:1.1rem;flex-shrink:0}
+    .vn{font-size:.68rem;margin-bottom:.06rem;line-height:1.2}
+    .vd{font-size:.6rem;line-height:1.3;color:var(--muted)}
+    .vchip{font-size:.55rem;padding:.1rem .26rem;border-width:1.5px;margin-left:auto}
     .pslot{width:auto !important;flex:1;min-height:68px;padding:.45rem .2rem}
     .pi{font-size:1.25rem}
     .pn{font-size:.5rem}
