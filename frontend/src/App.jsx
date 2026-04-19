@@ -186,10 +186,16 @@ const API = 'https://unipath-backend-bjou.onrender.com';
   @media(min-width:540px){.vgrid{gap:.75rem}}
   @media(max-width:520px){.vgrid{grid-template-columns:1fr}}
   .l4actions{padding-top:.75rem}
+  .l2btn-mob{display:none}
+  @media(min-width:521px){.l2actions{display:none}}
   @media(max-width:520px){
+    .l2btn-desk{display:none !important}
+    .l2btn-mob{display:flex}
     .l2actions{position:sticky;bottom:0;padding:.6rem 0 max(.75rem,env(safe-area-inset-bottom));background:linear-gradient(to bottom,transparent,rgba(124,58,237,.2));z-index:50}
-    .l3bot{position:sticky;bottom:0;padding:.75rem 0 max(.75rem,env(safe-area-inset-bottom));background:linear-gradient(to bottom,transparent,rgba(217,119,6,.2));z-index:50;display:flex;gap:.75rem;justify-content:center}
+    .l3wrap{min-height:calc(100dvh - 5rem)}
+    .l3bot{position:sticky;bottom:0;padding:.75rem 0 max(.75rem,env(safe-area-inset-bottom));background:linear-gradient(to bottom,transparent,rgba(217,119,6,.2));z-index:50;display:flex;gap:.75rem;justify-content:center;margin-top:auto;width:100%}
     .l4actions{position:sticky;bottom:0;padding:.6rem 0 max(.75rem,env(safe-area-inset-bottom));background:linear-gradient(to bottom,transparent,rgba(2,132,199,.2));z-index:50}
+    .l5actions{position:sticky;bottom:0;padding:.6rem 0 max(.75rem,env(safe-area-inset-bottom));background:linear-gradient(to bottom,transparent,rgba(101,163,13,.2));z-index:50}
   }
   .vcard{display:flex;align-items:flex-start;gap:.9rem;padding:1rem;border:2px solid var(--ink);border-radius:var(--rs);background:var(--cream);cursor:pointer;text-align:left;transition:transform .15s ease-out, box-shadow .15s ease-out, background .2s ease-out, border-color .2s ease-out;box-shadow:var(--s1)}
   .vcard:hover:not(:disabled){transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--ink)}
@@ -702,9 +708,12 @@ export default function App() {
                 </button>
               ))}
             </div>
+            <button className="btn violet l2btn-desk" disabled={selectedTier===null} onClick={confirmL2}>
+              <span>Confirm</span><span>→</span>
+            </button>
           </div>
           <div className="l2actions">
-            <button className="btn violet" disabled={selectedTier===null} onClick={confirmL2}>
+            <button className="btn violet l2btn-mob" disabled={selectedTier===null} onClick={confirmL2}>
               <span>Confirm</span><span>→</span>
             </button>
           </div>
@@ -714,7 +723,7 @@ export default function App() {
 
       {/* ══ L3 ══ */}
       {view==='l3-q'&&(
-        <W><div className="fu" style={{display:'flex',flexDirection:'column',alignItems:'center'}}>
+        <W><div className="fu l3wrap" style={{display:'flex',flexDirection:'column',alignItems:'center'}}>
           <div style={{width:'100%'}}>
             <LH label="Level 3 — Energy Check" bg="var(--amber)" idx={l3Index+1} total={level3Activities?.length} pct={progressL3}/>
           </div>
@@ -865,12 +874,14 @@ export default function App() {
             </div>
           )}
 
-          <button className="btn lime"
-            disabled={placedTags.length<8}
-            style={placedTags.length===8?{boxShadow:'6px 6px 0 #3d6b08'}:{}}
-            onClick={finishLevel5}>
-            <span>{placedTags.length<8?`Fill ${8-placedTags.length} more slot${8-placedTags.length===1?'':'s'}`:'Reveal My Major Match 🎓'}</span>
-          </button>
+          <div className="l5actions">
+            <button className="btn lime"
+              disabled={placedTags.length<8}
+              style={placedTags.length===8?{boxShadow:'6px 6px 0 #3d6b08'}:{}}
+              onClick={finishLevel5}>
+              <span>{placedTags.length<8?`Fill ${8-placedTags.length} more slot${8-placedTags.length===1?'':'s'}`:'Reveal My Major Match 🎓'}</span>
+            </button>
+          </div>
         </div></W>
       )}
 
