@@ -192,8 +192,7 @@ const API = 'https://unipath-backend-bjou.onrender.com';
     .l2btn-desk{display:none !important}
     .l2btn-mob{display:flex}
     .l2actions{position:sticky;bottom:0;padding:.6rem 0 max(.75rem,env(safe-area-inset-bottom));background:linear-gradient(to bottom,transparent,rgba(124,58,237,.2));z-index:50}
-    .l3wrap{min-height:calc(100dvh - 5rem)}
-    .l3bot{position:sticky;bottom:0;padding:.75rem 0 max(.75rem,env(safe-area-inset-bottom));background:linear-gradient(to bottom,transparent,rgba(217,119,6,.2));z-index:50;display:flex;gap:.75rem;justify-content:center;margin-top:auto;width:100%}
+    .l3strip{position:fixed;bottom:0;left:0;right:0;height:calc(env(safe-area-inset-bottom) + 3rem);background:linear-gradient(to bottom,transparent,rgba(217,119,6,.22));pointer-events:none;z-index:5}
     .l4actions{position:sticky;bottom:0;padding:.6rem 0 max(.75rem,env(safe-area-inset-bottom));background:linear-gradient(to bottom,transparent,rgba(2,132,199,.2));z-index:50}
     .l5actions{position:sticky;bottom:0;padding:.6rem 0 max(.75rem,env(safe-area-inset-bottom));background:linear-gradient(to bottom,transparent,rgba(101,163,13,.2));z-index:50}
   }
@@ -759,10 +758,11 @@ export default function App() {
           </div>
           {l3Index===0&&<div className="swhint">← drag the card →</div>}
 
-          <div className="l3bot">
+          <div style={{display:'flex',gap:'.75rem',marginTop:'1.5rem',justifyContent:'center'}}>
             <div style={{background:'#FFF0F0',border:'2px solid var(--rose)',borderRadius:'10px',padding:'.4rem 1rem',fontSize:'.72rem',fontWeight:800,color:'var(--rose)',boxShadow:'2px 2px 0 rgba(225,29,72,.3)'}}>✗ {drainsBucket.length}</div>
             <div style={{background:'#F0FDF4',border:'2px solid var(--lime)',borderRadius:'10px',padding:'.4rem 1rem',fontSize:'.72rem',fontWeight:800,color:'var(--lime)',boxShadow:'2px 2px 0 rgba(101,163,13,.3)'}}>✓ {energyBucket.length}</div>
           </div>
+          <div className="l3strip"/>
         </div></W>
       )}
       {view==='l3-done'&&<W><Done icon="⚡" ibg="#FEF9C3" title="Level 3 Done!" sub="Energy map locked. Time to build your vibe." bl="Start Level 4" bc="amber" next={()=>setView('l4-q')} lvl={3} accent="amber"/></W>}
