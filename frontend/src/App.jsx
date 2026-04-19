@@ -44,8 +44,8 @@ const API = 'https://unipath-backend-bjou.onrender.com';
   html,body,#root{
     min-height:100vh;background:var(--cream);color:var(--ink);
     font-family:var(--ff-b);-webkit-font-smoothing:antialiased;overflow-x:hidden;
-    -webkit-overflow-scrolling:touch;overscroll-behavior-y:none;
   }
+  @media(max-width:860px){body{-webkit-overflow-scrolling:touch}}
 
   /* gradient blobs */
   @keyframes drift1{0%{transform:translate(0,0)}20%{transform:translate(130px,50px)}40%{transform:translate(90px,140px)}60%{transform:translate(-40px,110px)}80%{transform:translate(-60px,25px)}100%{transform:translate(0,0)}}
@@ -148,11 +148,12 @@ const API = 'https://unipath-backend-bjou.onrender.com';
     .card{padding:1.5rem 1.2rem}
     .dwrap{padding:2rem 1.5rem}
     .dtitle{font-size:1.6rem}
-    .vcard{padding:.5rem .4rem;gap:.35rem}
-    .vi{font-size:1.2rem;flex-shrink:0}
-    .vn{font-size:.72rem;margin-bottom:.1rem}
-    .vd{display:none}
-    .vchip{font-size:.58rem;padding:.1rem .3rem;border-width:1.5px}
+    .vgrid{grid-template-columns:1fr}
+    .vcard{padding:.55rem .65rem;gap:.45rem}
+    .vi{font-size:1.3rem;flex-shrink:0}
+    .vn{font-size:.75rem;margin-bottom:.1rem}
+    .vd{font-size:.68rem;line-height:1.35}
+    .vchip{font-size:.6rem;padding:.12rem .35rem;border-width:1.5px}
     .pslot{width:auto !important;flex:1;min-height:68px;padding:.45rem .2rem}
     .pi{font-size:1.25rem}
     .pn{font-size:.5rem}
