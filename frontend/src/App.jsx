@@ -126,11 +126,18 @@ const API = 'https://unipath-backend-bjou.onrender.com';
   .tbtns{display:flex;gap:.6rem;margin-bottom:1.5rem}
   @media(max-width:480px){.tbtns{flex-direction:column}}
 
-  /* l1 face layout — flex column so button always stays at bottom */
-  .l1face{display:flex;flex-direction:column}
-  .l1text{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch}
+  /* L1 mobile: fixed full-screen panel, no scroll, fade swap instead of 3D flip */
   @media(max-width:520px){
-    .l1face{max-height:calc(100svh - 130px)}
+    .l1screen{position:fixed;inset:5px 0 0 0;padding:12px 16px 16px;display:flex;flex-direction:column;z-index:10;background:var(--cream);background-image:radial-gradient(circle,rgba(26,18,8,0.08) 1.5px,transparent 1.5px);background-size:28px 28px;overflow:hidden}
+    .l1screen .flipwrap{flex:1;min-height:0;overflow:hidden}
+    .l1screen .flipinner{height:100%;transform-style:flat !important;-webkit-transform-style:flat !important;transition:none !important}
+    .l1screen .flipinner.flipped{transform:none !important}
+    .l1face{height:100%;display:flex;flex-direction:column;padding:1.25rem 1.1rem !important}
+    .l1face .l1text{flex:1;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:.5rem}
+    .flipfront.l1face{opacity:1;pointer-events:auto;transition:opacity .22s ease}
+    .flipback.l1face{transform:none !important;opacity:0;pointer-events:none;transition:opacity .22s ease}
+    .flipinner.flipped .flipfront.l1face{opacity:0;pointer-events:none}
+    .flipinner.flipped .flipback.l1face{opacity:1;pointer-events:auto}
   }
 
   /* mobile compactness */
@@ -616,10 +623,10 @@ export default function App() {
 
       {/* ══ L1 ══ */}
       {view==='l1-q'&&(
-        <W><div className="fu">
+        <W><div className="fu l1screen">
           <LH label="Level 1 — Myth Buster" bg="var(--coral)" idx={l1Index+1} total={level1Questions?.length} pct={progressL1}/>
-          <div className="flipwrap">
-            <div className={`flipinner${l1Flipped?' flipped':''}`}>
+          <div className="flipwrap" style={{flex:1}}>
+            <div className={`flipinner${l1Flipped?' flipped':''}`} style={{height:'100%'}}>
               {/* Front */}
               <div className="flipfront l1face" style={{borderColor:'var(--coral)',boxShadow:'6px 6px 0 rgba(255,92,53,.3)'}}>
                 <div className="l1text">
@@ -627,9 +634,9 @@ export default function App() {
                     {currentL1.major}
                   </div>
                   <div style={{fontSize:'.6rem',fontWeight:800,textTransform:'uppercase',letterSpacing:'.1em',color:'var(--coral)',marginBottom:'.6rem'}}>The Stereotype</div>
-                  <div style={{fontSize:'.95rem',fontStyle:'italic',lineHeight:1.55,fontWeight:500,color:'var(--ink)',opacity:.8}}>"{currentL1.myth}"</div>
+                  <div style={{fontSize:'.95rem',fontStyle:'italic',lineHeight:1.55,fontWeight:500,marginBottom:'2rem',color:'var(--ink)',opacity:.8}}>"{currentL1.myth}"</div>
                 </div>
-                <button className="btn coral" style={{marginTop:'.85rem',flexShrink:0}} onClick={()=>setL1Flipped(true)}><span>Why is this wrong?</span><span>→</span></button>
+                <button className="btn coral" style={{flexShrink:0}} onClick={()=>setL1Flipped(true)}><span>Why is this wrong?</span><span>→</span></button>
               </div>
               {/* Back */}
               <div className="flipback l1face" style={{borderColor:'var(--lime)',boxShadow:'6px 6px 0 rgba(101,163,13,.3)'}}>
@@ -637,9 +644,9 @@ export default function App() {
                   <div style={{display:'inline-block',background:'#F0FDF4',color:'var(--lime)',border:'2px solid var(--lime)',borderRadius:'99px',padding:'.3rem 1rem',fontSize:'.68rem',fontWeight:800,textTransform:'uppercase',letterSpacing:'.12em',marginBottom:'1.25rem',boxShadow:'2px 2px 0 var(--lime)'}}>
                     The Reality
                   </div>
-                  <div style={{fontSize:'.95rem',lineHeight:1.55,fontWeight:600}}>{currentL1.reality}</div>
+                  <div style={{fontSize:'.95rem',lineHeight:1.55,fontWeight:600,marginBottom:'2rem'}}>{currentL1.reality}</div>
                 </div>
-                <button className="btn lime" style={{marginTop:'.85rem',flexShrink:0}} onClick={nextL1}><span>Got it, Next</span><span>→</span></button>
+                <button className="btn lime" style={{flexShrink:0}} onClick={nextL1}><span>Got it, Next</span><span>→</span></button>
               </div>
             </div>
           </div>
