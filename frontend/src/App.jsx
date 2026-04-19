@@ -165,7 +165,7 @@ const API = 'https://unipath-backend-bjou.onrender.com';
   .tbtn{flex:1;padding:.9rem .6rem;border:2px solid var(--ink);border-radius:var(--rs);background:var(--cream);color:var(--ink);font-family:var(--ff-b);font-size:.82rem;font-weight:700;cursor:pointer;text-align:center;transition:transform .15s ease-out, box-shadow .15s ease-out, background .2s ease-out, color .2s ease-out, border-color .2s ease-out;box-shadow:var(--s1);line-height:1.3}
   .tbtn:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--ink)}
   .tbtn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
-  .tbtn.sel{background:var(--violet);color:#fff;border-color:var(--violet);box-shadow:4px 4px 0 #4c1d95}
+  .tbtn.sel{background:var(--violet);color:#fff;border-color:var(--violet);box-shadow:4px 4px 0 var(--ink)}
 
   /* swipe */
   @keyframes swR{to{transform:translateX(130%) rotate(12deg);opacity:0}}
@@ -192,7 +192,8 @@ const API = 'https://unipath-backend-bjou.onrender.com';
     .l2btn-desk{display:none !important}
     .l2btn-mob{display:flex}
     .l2actions{position:sticky;bottom:0;padding:.6rem 0 max(.75rem,env(safe-area-inset-bottom));background:linear-gradient(to bottom,transparent,rgba(124,58,237,.2));z-index:50}
-    .l3strip{position:fixed;bottom:0;left:0;right:0;height:calc(env(safe-area-inset-bottom) + 3rem);background:linear-gradient(to bottom,transparent,rgba(217,119,6,.22));pointer-events:none;z-index:5}
+    .l3wrap{min-height:100dvh}
+    .l3amberbar{position:sticky;bottom:0;width:100%;height:calc(env(safe-area-inset-bottom) + .9rem);background:linear-gradient(to bottom,transparent,rgba(217,119,6,.28));z-index:50;pointer-events:none}
     .l4actions{position:sticky;bottom:0;padding:.6rem 0 max(.75rem,env(safe-area-inset-bottom));background:linear-gradient(to bottom,transparent,rgba(2,132,199,.2));z-index:50}
     .l5actions{position:sticky;bottom:0;padding:.6rem 0 max(.75rem,env(safe-area-inset-bottom));background:linear-gradient(to bottom,transparent,rgba(101,163,13,.2));z-index:50}
   }
@@ -759,10 +760,10 @@ export default function App() {
           {l3Index===0&&<div className="swhint">← drag the card →</div>}
 
           <div style={{display:'flex',gap:'.75rem',marginTop:'1.5rem',justifyContent:'center'}}>
-            <div style={{background:'#FFF0F0',border:'2px solid var(--rose)',borderRadius:'10px',padding:'.4rem 1rem',fontSize:'.72rem',fontWeight:800,color:'var(--rose)',boxShadow:'2px 2px 0 rgba(225,29,72,.3)'}}>✗ {drainsBucket.length}</div>
-            <div style={{background:'#F0FDF4',border:'2px solid var(--lime)',borderRadius:'10px',padding:'.4rem 1rem',fontSize:'.72rem',fontWeight:800,color:'var(--lime)',boxShadow:'2px 2px 0 rgba(101,163,13,.3)'}}>✓ {energyBucket.length}</div>
+            <div style={{background:'#FFF0F0',border:'2px solid var(--rose)',borderRadius:'10px',padding:'.4rem 1rem',fontSize:'.72rem',fontWeight:800,color:'var(--rose)',boxShadow:'2px 2px 0 rgba(26,18,8,.12)'}}>✗ {drainsBucket.length}</div>
+            <div style={{background:'#F0FDF4',border:'2px solid var(--lime)',borderRadius:'10px',padding:'.4rem 1rem',fontSize:'.72rem',fontWeight:800,color:'var(--lime)',boxShadow:'2px 2px 0 rgba(26,18,8,.12)'}}>✓ {energyBucket.length}</div>
           </div>
-          <div className="l3strip"/>
+          <div className="l3amberbar"/>
         </div></W>
       )}
       {view==='l3-done'&&<W><Done icon="⚡" ibg="#FEF9C3" title="Level 3 Done!" sub="Energy map locked. Time to build your vibe." bl="Start Level 4" bc="amber" next={()=>setView('l4-q')} lvl={3} accent="amber"/></W>}
