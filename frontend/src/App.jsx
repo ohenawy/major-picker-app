@@ -126,6 +126,13 @@ const API = 'https://unipath-backend-bjou.onrender.com';
   .tbtns{display:flex;gap:.6rem;margin-bottom:1.5rem}
   @media(max-width:480px){.tbtns{flex-direction:column}}
 
+  /* l1 face layout — flex column so button always stays at bottom */
+  .l1face{display:flex;flex-direction:column}
+  .l1text{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch}
+  @media(max-width:520px){
+    .l1face{max-height:calc(100svh - 130px)}
+  }
+
   /* mobile compactness */
   @media(max-width:520px){
     .card{padding:1.5rem 1.2rem}
@@ -407,7 +414,10 @@ export default function App() {
 
   const lvl = view.startsWith('l1')?1:view.startsWith('l2')?2:view.startsWith('l3')?3:view.startsWith('l4')?4:view.startsWith('l5')?5:0;
 
-  useEffect(()=>{ window.scrollTo(0,0); },[view]);
+  useEffect(()=>{
+    window.scrollTo(0,0);
+    document.body.style.overflowY = view==='l1-q' ? 'hidden' : '';
+  },[view]);
 
   useEffect(()=>{
     const handler = e => {
@@ -611,21 +621,25 @@ export default function App() {
           <div className="flipwrap">
             <div className={`flipinner${l1Flipped?' flipped':''}`}>
               {/* Front */}
-              <div className="flipfront" style={{borderColor:'var(--coral)',boxShadow:'6px 6px 0 rgba(255,92,53,.3)'}}>
-                <div style={{display:'inline-block',background:'#FFE4DB',color:'var(--coral)',border:'2px solid var(--coral)',borderRadius:'99px',padding:'.3rem 1rem',fontSize:'.68rem',fontWeight:800,textTransform:'uppercase',letterSpacing:'.12em',marginBottom:'1.25rem',boxShadow:'2px 2px 0 var(--coral)'}}>
-                  {currentL1.major}
+              <div className="flipfront l1face" style={{borderColor:'var(--coral)',boxShadow:'6px 6px 0 rgba(255,92,53,.3)'}}>
+                <div className="l1text">
+                  <div style={{display:'inline-block',background:'#FFE4DB',color:'var(--coral)',border:'2px solid var(--coral)',borderRadius:'99px',padding:'.3rem 1rem',fontSize:'.68rem',fontWeight:800,textTransform:'uppercase',letterSpacing:'.12em',marginBottom:'1.25rem',boxShadow:'2px 2px 0 var(--coral)'}}>
+                    {currentL1.major}
+                  </div>
+                  <div style={{fontSize:'.6rem',fontWeight:800,textTransform:'uppercase',letterSpacing:'.1em',color:'var(--coral)',marginBottom:'.6rem'}}>The Stereotype</div>
+                  <div style={{fontSize:'.95rem',fontStyle:'italic',lineHeight:1.55,fontWeight:500,color:'var(--ink)',opacity:.8}}>"{currentL1.myth}"</div>
                 </div>
-                <div style={{fontSize:'.6rem',fontWeight:800,textTransform:'uppercase',letterSpacing:'.1em',color:'var(--coral)',marginBottom:'.6rem'}}>The Stereotype</div>
-                <div style={{fontSize:'.95rem',fontStyle:'italic',lineHeight:1.55,fontWeight:500,marginBottom:'2rem',color:'var(--ink)',opacity:.8}}>"{currentL1.myth}"</div>
-                <button className="btn coral" onClick={()=>setL1Flipped(true)}><span>Why is this wrong?</span><span>→</span></button>
+                <button className="btn coral" style={{marginTop:'.85rem',flexShrink:0}} onClick={()=>setL1Flipped(true)}><span>Why is this wrong?</span><span>→</span></button>
               </div>
               {/* Back */}
-              <div className="flipback" style={{borderColor:'var(--lime)',boxShadow:'6px 6px 0 rgba(101,163,13,.3)'}}>
-                <div style={{display:'inline-block',background:'#F0FDF4',color:'var(--lime)',border:'2px solid var(--lime)',borderRadius:'99px',padding:'.3rem 1rem',fontSize:'.68rem',fontWeight:800,textTransform:'uppercase',letterSpacing:'.12em',marginBottom:'1.25rem',boxShadow:'2px 2px 0 var(--lime)'}}>
-                  The Reality
+              <div className="flipback l1face" style={{borderColor:'var(--lime)',boxShadow:'6px 6px 0 rgba(101,163,13,.3)'}}>
+                <div className="l1text">
+                  <div style={{display:'inline-block',background:'#F0FDF4',color:'var(--lime)',border:'2px solid var(--lime)',borderRadius:'99px',padding:'.3rem 1rem',fontSize:'.68rem',fontWeight:800,textTransform:'uppercase',letterSpacing:'.12em',marginBottom:'1.25rem',boxShadow:'2px 2px 0 var(--lime)'}}>
+                    The Reality
+                  </div>
+                  <div style={{fontSize:'.95rem',lineHeight:1.55,fontWeight:600}}>{currentL1.reality}</div>
                 </div>
-                <div style={{fontSize:'.95rem',lineHeight:1.55,fontWeight:600,marginBottom:'2rem'}}>{currentL1.reality}</div>
-                <button className="btn lime" onClick={nextL1}><span>Got it, Next</span><span>→</span></button>
+                <button className="btn lime" style={{marginTop:'.85rem',flexShrink:0}} onClick={nextL1}><span>Got it, Next</span><span>→</span></button>
               </div>
             </div>
           </div>
