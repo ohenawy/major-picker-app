@@ -58,6 +58,7 @@ const API = 'https://unipath-backend-bjou.onrender.com';
   body{
     background-image:radial-gradient(circle,rgba(26,18,8,0.08) 1.5px,transparent 1.5px);
     background-size:28px 28px;
+    padding-bottom:env(safe-area-inset-bottom);
   }
 
   ::-webkit-scrollbar{width:5px}
@@ -96,7 +97,7 @@ const API = 'https://unipath-backend-bjou.onrender.com';
   .ripple{position:absolute;width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.35);transform:translate(-50%,-50%) scale(0);animation:ripple .6s ease-out forwards;pointer-events:none}
   .btn{display:flex;align-items:center;justify-content:center;gap:.5rem;width:100%;padding:.95rem 1.5rem;border:2px solid var(--ink);border-radius:var(--rs);font-family:var(--ff-b);font-size:.95rem;font-weight:800;cursor:pointer;transition:transform .15s ease-out, box-shadow .15s ease-out, background .2s ease-out, color .2s ease-out;box-shadow:var(--s2);position:relative;overflow:hidden}
   .btn:hover:not(:disabled){transform:translate(-1px,-1px);box-shadow:5px 5px 0 var(--ink)}
-  .btn:active:not(:disabled){transform:translate(3px,3px);box-shadow:1px 1px 0 var(--ink)}
+  .btn:active:not(:disabled){transform:translate(2px,2px) scale(0.97);box-shadow:1px 1px 0 var(--ink)}
   .btn:disabled{opacity:.32;cursor:not-allowed;box-shadow:2px 2px 0 var(--ink)}
   .btn.coral{background:var(--coral);color:#fff}
   .btn.violet{background:var(--violet);color:#fff}
@@ -176,8 +177,12 @@ const API = 'https://unipath-backend-bjou.onrender.com';
   .swyes:hover{background:var(--lime);color:#fff;box-shadow:4px 4px 0 #3d6b08}
 
   /* vibes */
-  .vgrid{display:grid;grid-template-columns:1fr;gap:.75rem}
-  @media(min-width:540px){.vgrid{grid-template-columns:1fr 1fr}}
+  .vgrid{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
+  @media(min-width:540px){.vgrid{gap:.75rem}}
+  .l4actions{padding-top:.75rem}
+  @media(max-width:520px){
+    .l4actions{position:sticky;bottom:0;padding:.6rem 0 max(.75rem,env(safe-area-inset-bottom));background:linear-gradient(to bottom,transparent,var(--cream) 28%);z-index:50}
+  }
   .vcard{display:flex;align-items:flex-start;gap:.9rem;padding:1rem;border:2px solid var(--ink);border-radius:var(--rs);background:var(--cream);cursor:pointer;text-align:left;transition:transform .15s ease-out, box-shadow .15s ease-out, background .2s ease-out, border-color .2s ease-out;box-shadow:var(--s1)}
   .vcard:hover:not(:disabled){transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--ink)}
   .vcard:active:not(:disabled){transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
@@ -218,6 +223,10 @@ const API = 'https://unipath-backend-bjou.onrender.com';
   /* results */
   .rgrid{display:grid;grid-template-columns:1fr;gap:1rem}
   @media(min-width:640px){.rgrid{grid-template-columns:repeat(3,1fr)}}
+  @media(max-width:639px){.rcard .rdesc{display:none}.rcard.open .rdesc{display:block}}
+  /* L3 swipe hint */
+  @keyframes hintFade{0%,60%{opacity:.65}100%{opacity:0}}
+  .swhint{font-size:.65rem;font-weight:700;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;text-align:center;margin-top:.4rem;animation:hintFade 2.8s ease 1s forwards;pointer-events:none}
   .rcard{background:var(--paper);border:2px solid var(--ink);border-radius:var(--r);padding:1.75rem 1.5rem;display:flex;flex-direction:column;position:relative;overflow:hidden;transition:transform .2s ease-out, box-shadow .2s ease-out;box-shadow:var(--s2)}
   .rcard:hover{transform:translate(-2px,-2px);box-shadow:var(--s4)}
   .rcard.win{background:#ECFDF5;border-color:var(--lime);box-shadow:6px 6px 0 var(--lime)}
@@ -418,6 +427,7 @@ export default function App() {
   const [finalResults, setFinalResults] = useState(null);
   const [allResults, setAllResults] = useState(null);
   const [showAllMajors, setShowAllMajors] = useState(false);
+  const [expandedResult, setExpandedResult] = useState(null);
 
   const lvl = view.startsWith('l1')?1:view.startsWith('l2')?2:view.startsWith('l3')?3:view.startsWith('l4')?4:view.startsWith('l5')?5:0;
 
@@ -589,7 +599,7 @@ export default function App() {
 
             {LEVELS.map((lv,i)=>(
               <div key={i} style={{marginBottom:'1rem',position:'relative',zIndex:1}}>
-                <div style={{display:'flex',alignItems:'flex-start',gap:'1rem',cursor:'pointer'}}
+                <div style={{display:'flex',alignItems:'flex-start',gap:'1rem',cursor:'pointer',padding:'.35rem 0',minHeight:52}}
                   onClick={()=>setIntroStop(introStop===i?null:i)}>
                   {/* Node */}
                   <div className="pnode" style={{width:44,height:44,borderRadius:'50%',background:lv.color,border:'2.5px solid var(--ink)',boxShadow:'3px 3px 0 var(--ink)',display:'flex',alignItems:'center',justifyContent:'center',fontFamily:'var(--ff-d)',fontWeight:900,fontSize:'.9rem',color:'#fff',flexShrink:0,transition:'transform .15s,box-shadow .15s'}}>
@@ -718,8 +728,9 @@ export default function App() {
 
           <div style={{display:'flex',justifyContent:'space-between',width:'100%',maxWidth:'420px',padding:'0 2rem'}}>
             <span style={{fontSize:'.72rem',fontWeight:700,textTransform:'uppercase',letterSpacing:'.08em',transition:'color .15s,transform .15s',color:dragX<-30?'var(--rose)':'rgba(26,18,8,.3)',transform:dragX<-30?'scale(1.12)':'scale(1)'}}>I'd Rather not</span>
-            <span style={{fontSize:'.72rem',fontWeight:700,textTransform:'uppercase',letterSpacing:'.08em',transition:'color .15s,transform .15s',color:dragX>30?'var(--lime)':'rgba(26,18,8,.3)',transform:dragX>30?'scale(1.12)':'scale(1)'}}>Sure,Yeah</span>
+            <span style={{fontSize:'.72rem',fontWeight:700,textTransform:'uppercase',letterSpacing:'.08em',transition:'color .15s,transform .15s',color:dragX>30?'var(--lime)':'rgba(26,18,8,.3)',transform:dragX>30?'scale(1.12)':'scale(1)'}}>Sure, Yeah</span>
           </div>
+          {l3Index===0&&<div className="swhint">← drag the card →</div>}
 
           <div style={{display:'flex',gap:'.75rem',marginTop:'1.5rem',justifyContent:'center'}}>
             <div style={{background:'#FFF0F0',border:'2px solid var(--rose)',borderRadius:'10px',padding:'.4rem 1rem',fontSize:'.72rem',fontWeight:800,color:'var(--rose)',boxShadow:'2px 2px 0 rgba(225,29,72,.3)'}}>✗ {drainsBucket.length}</div>
@@ -760,10 +771,12 @@ export default function App() {
               );
             })}
           </div>
-          <button className="btn sky" disabled={purchasedVibes.length===0} onClick={finishLevel4}>
-            <span>{purchasedVibes.length>0?'Lock In My Vibe':'Pick something first'}</span>
-            {purchasedVibes.length>0&&<span>→</span>}
-          </button>
+          <div className="l4actions">
+            <button className="btn sky" disabled={purchasedVibes.length===0} onClick={finishLevel4}>
+              <span>{purchasedVibes.length>0?'Lock In My Vibe':'Pick something first'}</span>
+              {purchasedVibes.length>0&&<span>→</span>}
+            </button>
+          </div>
         </div></W>
       )}
       {view==='l4-done'&&<W><Done icon="🎯" ibg="#E0F2FE" title="Level 4 Done!" sub="Vibe locked. One final boss level!" bl="Enter The Pyramid" bc="sky" next={()=>setView('l5-q')} lvl={4} accent="sky"/></W>}
@@ -868,12 +881,12 @@ export default function App() {
           ):(
             <div className="rgrid">
               {finalResults.map((m,i)=>(
-                <div key={i} className={`rcard fu ${i===0?'win':''}`} style={{animationDelay:`${0.1+i*0.2}s`,...(i===0?{marginTop:'-14px'}:{})}}>
+                <div key={i} className={`rcard fu ${i===0?'win':''} ${expandedResult===i?'open':''}`} style={{animationDelay:`${0.1+i*0.2}s`,...(i===0?{marginTop:'-14px'}:{})}} onClick={()=>setExpandedResult(expandedResult===i?null:i)}>
                   {i===0&&<div style={{position:'absolute',top:0,left:0,right:0,height:4,background:'linear-gradient(90deg,var(--lime),var(--sky))',borderRadius:'calc(var(--r) - 2px) calc(var(--r) - 2px) 0 0'}}/>}
                   <div className="rbadge" style={i===0?{background:'var(--lime)',borderColor:'var(--lime)'}:{}}>{i===0?'🏆 Best Match':`#${i+1}`}</div>
                   <div className="rfac" style={i===0?{color:'var(--lime)',fontWeight:800}:{}}>{m.faculty}</div>
                   <h3>{m.major}</h3>
-                  <p>{m.description}</p>
+                  <p className="rdesc">{m.description}</p>
                   <div className="srow">
                     <span className="slabel">Match Score</span>
                     <span className="sval">{Math.round(m.score)}%</span>
