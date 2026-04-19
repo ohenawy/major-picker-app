@@ -44,6 +44,7 @@ const API = 'https://unipath-backend-bjou.onrender.com';
   html,body,#root{
     min-height:100vh;background:var(--cream);color:var(--ink);
     font-family:var(--ff-b);-webkit-font-smoothing:antialiased;overflow-x:hidden;
+    -webkit-overflow-scrolling:touch;overscroll-behavior-y:none;
   }
 
   /* gradient blobs */
@@ -53,6 +54,7 @@ const API = 'https://unipath-backend-bjou.onrender.com';
   html::before{content:'';position:fixed;top:-280px;left:-280px;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(255,92,53,0.26) 0%,transparent 68%);pointer-events:none;filter:blur(55px);animation:drift1 24s ease-in-out infinite;z-index:0}
   html::after{content:'';position:fixed;top:-240px;right:-280px;width:800px;height:800px;border-radius:50%;background:radial-gradient(circle,rgba(124,58,237,0.22) 0%,transparent 68%);pointer-events:none;filter:blur(55px);animation:drift2 28s ease-in-out infinite;z-index:0}
   body::after{content:'';position:fixed;bottom:-280px;left:50%;width:750px;height:750px;border-radius:50%;background:radial-gradient(circle,rgba(217,119,6,0.21) 0%,transparent 68%);pointer-events:none;filter:blur(65px);animation:drift3 26s ease-in-out infinite;z-index:0}
+  @media(max-width:860px){html::before,html::after,body::after{display:none}}
 
   /* dot grid — on body directly so iOS overscroll is covered too */
   body{
@@ -146,9 +148,11 @@ const API = 'https://unipath-backend-bjou.onrender.com';
     .card{padding:1.5rem 1.2rem}
     .dwrap{padding:2rem 1.5rem}
     .dtitle{font-size:1.6rem}
-    .vcard{padding:.7rem .6rem;gap:.6rem}
-    .vi{font-size:1.5rem}
-    .vd{font-size:.72rem}
+    .vcard{padding:.5rem .4rem;gap:.35rem}
+    .vi{font-size:1.2rem;flex-shrink:0}
+    .vn{font-size:.72rem;margin-bottom:.1rem}
+    .vd{display:none}
+    .vchip{font-size:.58rem;padding:.1rem .3rem;border-width:1.5px}
     .pslot{width:auto !important;flex:1;min-height:68px;padding:.45rem .2rem}
     .pi{font-size:1.25rem}
     .pn{font-size:.5rem}
@@ -223,7 +227,13 @@ const API = 'https://unipath-backend-bjou.onrender.com';
   /* results */
   .rgrid{display:grid;grid-template-columns:1fr;gap:1rem}
   @media(min-width:640px){.rgrid{grid-template-columns:repeat(3,1fr)}}
-  @media(max-width:639px){.rcard .rdesc{display:none}.rcard.open .rdesc{display:block}}
+  @media(max-width:639px){
+    .rcard .rdesc{display:none}
+    .rcard.open .rdesc{display:block}
+    .rtap{display:flex;align-items:center;gap:.3rem;font-size:.6rem;font-weight:700;color:var(--muted);letter-spacing:.06em;margin-top:.3rem;opacity:.7}
+    .rcard.open .rtap{opacity:0;height:0;overflow:hidden;margin:0}
+  }
+  @media(min-width:640px){.rtap{display:none}}
   /* L3 swipe hint */
   @keyframes hintFade{0%,60%{opacity:.65}100%{opacity:0}}
   .swhint{font-size:.65rem;font-weight:700;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;text-align:center;margin-top:.4rem;animation:hintFade 2.8s ease 1s forwards;pointer-events:none}
@@ -886,6 +896,7 @@ export default function App() {
                   <div className="rbadge" style={i===0?{background:'var(--lime)',borderColor:'var(--lime)'}:{}}>{i===0?'🏆 Best Match':`#${i+1}`}</div>
                   <div className="rfac" style={i===0?{color:'var(--lime)',fontWeight:800}:{}}>{m.faculty}</div>
                   <h3>{m.major}</h3>
+                  <div className="rtap">↓ tap to read description</div>
                   <p className="rdesc">{m.description}</p>
                   <div className="srow">
                     <span className="slabel">Match Score</span>
