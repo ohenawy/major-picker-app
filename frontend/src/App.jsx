@@ -227,6 +227,7 @@ const API = 'https://unipath-backend-bjou.onrender.com';
   .ht{position:relative;overflow:visible !important}
   .ht .tt{visibility:hidden;width:max-content;max-width:200px;background:var(--ink);color:var(--cream);text-align:center;border-radius:8px;padding:.5rem .75rem;position:absolute;z-index:200;bottom:110%;left:50%;transform:translateX(-50%);opacity:0;transition:opacity .15s;font-family:var(--ff-b);font-size:.72rem;font-weight:500;pointer-events:none}
   .ht:hover .tt{visibility:visible;opacity:1}
+  @media(max-width:860px){.ht .tt{display:none}}
 
   /* results */
   .rgrid{display:grid;grid-template-columns:1fr;gap:1rem}
@@ -442,6 +443,7 @@ export default function App() {
   const [allResults, setAllResults] = useState(null);
   const [showAllMajors, setShowAllMajors] = useState(false);
   const [expandedResult, setExpandedResult] = useState(null);
+  const [activeTagInfo, setActiveTagInfo] = useState(null);
 
   const lvl = view.startsWith('l1')?1:view.startsWith('l2')?2:view.startsWith('l3')?3:view.startsWith('l4')?4:view.startsWith('l5')?5:0;
 
@@ -816,8 +818,6 @@ export default function App() {
               <div key={ti} style={{marginBottom:'.75rem'}}>
                 <div style={{display:'flex',alignItems:'center',gap:'.5rem',marginBottom:'.35rem'}}>
                   <span style={{fontSize:'.6rem',fontWeight:800,textTransform:'uppercase',letterSpacing:'.1em',color:'var(--muted)'}}>{tier.label}</span>
-                  <span style={{fontSize:'.58rem',fontWeight:900,padding:'.1rem .45rem',borderRadius:99,border:'1.5px solid var(--ink)',background:ti===0?'var(--lime)':ti===1?'var(--violet)':'var(--amber)',color:'#fff',flexShrink:0}}>{ti===0?'3×':ti===1?'2×':'1×'}</span>
-                  <span style={{fontSize:'.56rem',color:'var(--muted)',opacity:.65}}>— {tier.sub}</span>
                 </div>
                 <div className="ptier">
                   {tier.slots.map(idx=>(
@@ -849,17 +849,22 @@ export default function App() {
             </div>
             <div style={{display:'flex',flexWrap:'wrap',gap:'.5rem',justifyContent:'center'}}>
               {availableTags.map(tag=>(
-                <button key={tag.id} className="tchip ht" onClick={()=>handlePlaceTag(tag)}>
+                <button key={tag.id} className="tchip" onClick={()=>handlePlaceTag(tag)}>
                   <span style={{fontSize:'1rem'}}>{tag.icon}</span>
                   {tag.name}
-                  {tag.desc&&<span className="tt">{tag.desc}</span>}
+                  {tag.desc&&<span onClick={e=>{e.stopPropagation();setActiveTagInfo(activeTagInfo===tag.id?null:tag.id)}} style={{fontSize:'.6rem',opacity:.4,marginLeft:'.1rem',cursor:'pointer',flexShrink:0}}>ⓘ</span>}
                 </button>
               ))}
               {availableTags.length===0&&<span style={{fontSize:'.82rem',fontWeight:700,color:'var(--lime)'}}>🎉 Pyramid complete!</span>}
             </div>
           </div>
 
-          {/* CHANGED: Updated math required limit to 8 */}
+          {activeTagInfo&&availableTags.find(t=>t.id===activeTagInfo)?.desc&&(
+            <div className="fu" style={{background:'#ECFDF5',border:'2px solid var(--lime)',borderRadius:10,padding:'.7rem 1rem',fontSize:'.82rem',color:'var(--ink)',lineHeight:1.55,boxShadow:'3px 3px 0 var(--lime)',marginBottom:'.75rem'}}>
+              {availableTags.find(t=>t.id===activeTagInfo).desc}
+            </div>
+          )}
+
           <button className="btn lime"
             disabled={placedTags.length<8}
             style={placedTags.length===8?{boxShadow:'6px 6px 0 #3d6b08'}:{}}
