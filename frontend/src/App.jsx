@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 import { level1Questions, level2Skillsets, level3Activities, level4Vibes, level5Tags, MASTER_TAGS } from './questions';
 
-const API = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+const API = 'https://unipath-backend-bjou.onrender.com';
 
 /* ── Fonts ── */
 (()=>{
