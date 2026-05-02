@@ -367,7 +367,7 @@ const Confetti = () => (
 );
 
 const LEVELS = [
-  {name:'Myth Buster',     color:'var(--coral)',  desc:'We start by shattering common university stereotypes to make sure you are approaching your options with a completely open mind.'},
+  {name:'Myth Buster',     color:'var(--coral)',  desc:'This stage challenges widespread misconceptions about university majors, ensuring you approach your options with clarity and an unbiased perspective.'},
   {name:'Dealbreakers',    color:'var(--violet)', desc:'Every career has its downsides. In this stage, you will define your boundaries by deciding which types of challenges, responsibilities, or daily grinds are absolute dealbreakers for you.'},
   {name:'Energy Profile',  color:'var(--amber)',  desc:'Success requires sustainable drive. Through a rapid-fire assessment, we will map out the types of interactions, problems, and environments that naturally fuel you versus the ones that leave you completely drained.'},
   {name:'The Vibe Budget', color:'var(--sky)',    desc:'You have a limited budget of credits. Spend them to build your ideal day-to-day working environment.'},
@@ -415,6 +415,7 @@ export default function App() {
   const [introStop, setIntroStop] = useState(null);
   const [nameErr, setNameErr] = useState(false);
   const [showL4Hint, setShowL4Hint] = useState(false);
+  const [showL5Hint, setShowL5Hint] = useState(false);
   const [l1Flipped, setL1Flipped] = useState(false);
 
   const [l1Index, setL1Index] = useState(0);
@@ -746,8 +747,11 @@ export default function App() {
                 {currentL3.task}
               </div>
             </div>
-            <div style={{display:'flex',justifyContent:'space-between',width:'100%',padding:'0 1.5rem',marginTop:'-28px',position:'relative',zIndex:10}}>
+            <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',width:'100%',padding:'0 1.5rem',marginTop:'-28px',position:'relative',zIndex:10}}>
               <button className="swbtn swno" onClick={()=>handleL3Swipe(false)}>✗</button>
+              <div style={{textAlign:'center',fontSize:'.55rem',fontWeight:800,letterSpacing:'.1em',textTransform:'uppercase',color:'var(--muted)',opacity:.55,lineHeight:1.5}}>
+                <div>← swipe →</div>
+              </div>
               <button className="swbtn swyes" onClick={()=>handleL3Swipe(true)}>✓</button>
             </div>
           </div>
@@ -756,7 +760,6 @@ export default function App() {
             <span style={{fontSize:'.72rem',fontWeight:700,textTransform:'uppercase',letterSpacing:'.08em',transition:'color .15s,transform .15s',color:dragX<-30?'var(--rose)':'rgba(26,18,8,.3)',transform:dragX<-30?'scale(1.12)':'scale(1)'}}>I'd Rather not</span>
             <span style={{fontSize:'.72rem',fontWeight:700,textTransform:'uppercase',letterSpacing:'.08em',transition:'color .15s,transform .15s',color:dragX>30?'var(--lime)':'rgba(26,18,8,.3)',transform:dragX>30?'scale(1.12)':'scale(1)'}}>Sure, Yeah</span>
           </div>
-          {l3Index===0&&<div className="swhint">← drag the card →</div>}
 
           <div style={{display:'flex',gap:'.75rem',marginTop:'1.5rem',justifyContent:'center'}}>
             <div style={{background:'#FFF0F0',border:'2px solid var(--rose)',borderRadius:'10px',padding:'.4rem 1rem',fontSize:'.72rem',fontWeight:800,color:'var(--rose)',boxShadow:'2px 2px 0 rgba(26,18,8,.12)'}}>✗ {drainsBucket.length}</div>
@@ -773,7 +776,7 @@ export default function App() {
           <div className="lhrow">
             <span className="stamp" style={{background:'var(--sky)',color:'#fff',borderColor:'rgba(26,18,8,.5)'}}>Level 4 — Vibe Budget</span>
             <div style={{display:'flex',alignItems:'center',gap:'.6rem'}}>
-              <button onClick={()=>setShowL4Hint(h=>!h)} style={{width:32,height:32,borderRadius:'50%',border:'2px solid var(--ink)',background:showL4Hint?'var(--amber)':'var(--paper)',cursor:'pointer',fontSize:'1rem',display:'flex',alignItems:'center',justifyContent:'center',boxShadow:'var(--s1)',transition:'background .2s,transform .15s,box-shadow .15s',flexShrink:0}} onMouseEnter={e=>{e.currentTarget.style.transform='translate(-1px,-1px)';e.currentTarget.style.boxShadow='3px 3px 0 var(--ink)'}} onMouseLeave={e=>{e.currentTarget.style.transform='';e.currentTarget.style.boxShadow='var(--s1)'}}>💡</button>
+              <button onClick={()=>setShowL4Hint(h=>!h)} style={{display:'flex',alignItems:'center',gap:'.3rem',padding:'.3rem .75rem',borderRadius:99,border:'2px solid var(--ink)',background:showL4Hint?'var(--amber)':'var(--paper)',color:showL4Hint?'#fff':'var(--ink)',cursor:'pointer',fontSize:'.7rem',fontWeight:800,boxShadow:'var(--s1)',transition:'background .2s,color .2s,transform .15s,box-shadow .15s',flexShrink:0,letterSpacing:'.04em'}} onMouseEnter={e=>{e.currentTarget.style.transform='translate(-1px,-1px)';e.currentTarget.style.boxShadow='3px 3px 0 var(--ink)'}} onMouseLeave={e=>{e.currentTarget.style.transform='';e.currentTarget.style.boxShadow='var(--s1)'}}>💡 Hint</button>
               <span className={`bbudget ${budget===0?'empty':''}`}>💰 {displayBudget} credits</span>
             </div>
           </div>
@@ -811,11 +814,19 @@ export default function App() {
       {/* ══ L5 ══ */}
       {view==='l5-q'&&(
         <W max="700px"><div className="fu">
-          <div style={{textAlign:'center',marginBottom:'1.75rem'}}>
-            <span className="stamp" style={{background:'var(--lime)',color:'#fff',borderColor:'rgba(26,18,8,.5)',margin:'0 auto .75rem',display:'inline-flex'}}>Level 5 — The Pyramid</span>
+          <div style={{textAlign:'center',marginBottom:'1rem'}}>
+            <div style={{display:'flex',alignItems:'center',justifyContent:'center',gap:'.75rem',marginBottom:'.75rem'}}>
+              <span className="stamp" style={{background:'var(--lime)',color:'#fff',borderColor:'rgba(26,18,8,.5)',margin:0}}>Level 5 — The Pyramid</span>
+              <button onClick={()=>setShowL5Hint(h=>!h)} style={{display:'flex',alignItems:'center',gap:'.3rem',padding:'.3rem .75rem',borderRadius:99,border:'2px solid var(--ink)',background:showL5Hint?'var(--lime)':'var(--paper)',color:showL5Hint?'#fff':'var(--ink)',cursor:'pointer',fontSize:'.7rem',fontWeight:800,boxShadow:'var(--s1)',transition:'background .2s,color .2s,transform .15s,box-shadow .15s',flexShrink:0,letterSpacing:'.04em'}} onMouseEnter={e=>{e.currentTarget.style.transform='translate(-1px,-1px)';e.currentTarget.style.boxShadow='3px 3px 0 var(--ink)'}} onMouseLeave={e=>{e.currentTarget.style.transform='';e.currentTarget.style.boxShadow='var(--s1)'}}>💡 Hint</button>
+            </div>
             <div style={{fontFamily:'var(--ff-d)',fontWeight:900,fontSize:'clamp(1.7rem,5vw,2.3rem)',letterSpacing:'-.02em',marginBottom:'.4rem'}}>Build Your Career Pyramid</div>
             <p style={{fontSize:'.82rem',color:'var(--muted)',fontWeight:500}}>Tap the tags below to fill the slots. Tap a filled slot to remove.</p>
           </div>
+          {showL5Hint&&(
+            <div className="fu" style={{background:'#ECFDF5',border:'2px solid var(--lime)',borderRadius:'var(--rs)',padding:'.9rem 1.1rem',marginBottom:'.9rem',boxShadow:'3px 3px 0 var(--lime)',fontSize:'.85rem',fontWeight:500,color:'var(--ink)',lineHeight:1.6}}>
+              💡 Tap any tag in the bank to place it into the next available slot — starting from the Peak down. The higher the slot, the more it influences your final result. Tap a filled slot to remove that tag.
+            </div>
+          )}
 
           {/* CHANGED: Restored to 8-slot pyramid logic */}
           <div style={{background:'var(--paper)',border:'2px solid var(--lime)',borderRadius:'var(--r)',boxShadow:'6px 6px 0 rgba(101,163,13,.3)',padding:'1.75rem 1.5rem 1.5rem',marginBottom:'1.1rem'}}>
@@ -832,7 +843,6 @@ export default function App() {
                   {tier.slots.map(idx=>(
                     <div key={idx}
                       className={`pslot ${tier.cls} ${placedTags[idx]?'f ht':''}`}
-                      /* CHANGED: Dynamic widths fit perfectly for an 8-slot array (1-3-4 pattern) */
                       style={{width:`${tier.slots.length===1?155:tier.slots.length===3?120:90}px`}}
                       onClick={()=>placedTags[idx]&&handleRemoveTag(placedTags[idx])}>
                       {placedTags[idx]?(

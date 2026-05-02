@@ -32,13 +32,6 @@ export const level1Questions = [
     
   },
   {
-    id: 4,
-    major: "Political Science",
-    myth: "Stereotyped as a breeding ground for cynical careerists who value rhetoric and optics over genuine policy-making and social impact.",
-    reality: "It’s a data science, not a debate club. Modern PolSci uses complex statistical modeling and game theory to predict human behavior. It’s not about 'talking'; it’s about the cold, hard analysis of how power and resources are distributed.",
-    
-  },
-  {
     id: 5,
     major: "Law",
     myth: "Seen as a profession for those who prioritize cold, pedantic technicalities and 'winning' over the actual pursuit of justice or ethics.",
@@ -199,7 +192,7 @@ export const level3Activities = [
 
 // 5. LEVEL 4: THE VIBE BUDGET (Expanded to capture Connectivity & Logic)
 export const level4Vibes = [
-  { id: 1, name: "Prestige & Tradition", cost: 40, icon: "🏛️", desc: "High-stakes exams, famous professors, and a 'classic' university feel.", tag: "memorization" },
+  { id: 1, name: "Prestige & Tradition", cost: 40, icon: "🏛️", desc: "Master classical academic subjects through intensive study and precise factual recall.", tag: "memorization" },
   { id: 2, name: "Project-Based Learning", cost: 35, icon: "🛠️", desc: "Fewer exams, more 'building' and 'doing' in teams.", tag: "physical-design" },
   { id: 3, name: "Research Focus", cost: 30, icon: "🔬", desc: "Investigating new theories and spending time in labs or libraries.", tag: "clinical" },
   { id: 4, name: "Creative Freedom", cost: 25, icon: "🎭", desc: "Flexible assignments where you choose how to express your ideas.", tag: "subjectivity" },
@@ -207,7 +200,7 @@ export const level4Vibes = [
   { id: 6, name: "Discussion-Heavy", cost: 20, icon: "🗣️", desc: "Small classes where participation and debate are mandatory.", tag: "public-speaking" },
   { id: 7, name: "Fast-Paced / Competitive", cost: 30, icon: "🏎️", desc: "An intense environment that pushes you to be the best in your cohort.", tag: "high-stress" },
   { id: 8, name: "Collaborative / Supportive", cost: 20, icon: "🌱", desc: "A culture where students help each other and work is mostly shared.", tag: "collaboration" },
-  { id: 9, name: "Global Connection", cost: 25, icon: "🌐", desc: "Focus on internet infrastructure and worldwide communication.", tag: "connectivity" }
+  { id: 9, name: "Digital Infrastructure", cost: 25, icon: "🌐", desc: "Focus on internet infrastructure and worldwide communication.", tag: "connectivity" }
 ];
 
 // 6. LEVEL 5: THE CAREER PYRAMID
