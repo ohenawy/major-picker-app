@@ -45,7 +45,8 @@ const API = 'https://unipath-backend-bjou.onrender.com';
     min-height:100vh;background:var(--cream);color:var(--ink);
     font-family:var(--ff-b);-webkit-font-smoothing:antialiased;overflow-x:hidden;
   }
-  @media(max-width:860px){body{-webkit-overflow-scrolling:touch}}
+  html{overscroll-behavior:none}
+  body{overscroll-behavior:none}
 
   /* gradient blobs */
   @keyframes drift1{0%{transform:translate(0,0)}20%{transform:translate(130px,50px)}40%{transform:translate(90px,140px)}60%{transform:translate(-40px,110px)}80%{transform:translate(-60px,25px)}100%{transform:translate(0,0)}}
