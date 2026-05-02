@@ -296,7 +296,7 @@ const API = 'https://unipath-backend-bjou.onrender.com';
   .lcnt{font-family:var(--ff-b);font-size:.72rem;font-weight:700;color:var(--muted);background:rgba(26,18,8,.06);padding:.25rem .75rem;border:1.5px solid rgba(26,18,8,.15);border-radius:99px}
 
   /* all majors modal */
-  .amoverlay{position:fixed;inset:0;z-index:300;background:rgba(26,18,8,.45);display:flex;align-items:center;justify-content:center;padding:1rem;animation:fadeUp .2s ease both}
+  .amoverlay{position:fixed;inset:0;z-index:300;display:flex;align-items:center;justify-content:center;padding:1rem;animation:fadeUp .2s ease both}
   .ammodal{background:var(--paper);border:2px solid var(--ink);border-radius:var(--r);box-shadow:var(--s4);width:100%;max-width:640px;max-height:88vh;display:flex;flex-direction:column;overflow:hidden}
   .amhead{display:flex;align-items:center;justify-content:space-between;padding:1.2rem 1.5rem;border-bottom:2px solid rgba(26,18,8,.1);flex-shrink:0}
   .amhead h2{font-family:var(--ff-d);font-weight:900;font-size:1.3rem;margin:0}
@@ -900,7 +900,7 @@ export default function App() {
             {['var(--coral)','var(--violet)','var(--lime)'].map((bg,i)=>(<div key={i} className="cdot" style={{background:bg}}/>))}
           </div>
           <div style={{fontFamily:'var(--ff-d)',fontWeight:900,fontSize:'1.9rem',marginBottom:'.5rem'}}>Crunching the numbers…</div>
-          <div style={{fontSize:'.85rem',color:'var(--muted)',fontWeight:500}}>Matching you across {placedTags.length*20} data points</div>
+          <div style={{fontSize:'.85rem',color:'var(--muted)',fontWeight:500}}></div>
         </div>
       )}
 
