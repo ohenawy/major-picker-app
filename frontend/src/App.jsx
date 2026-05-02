@@ -747,11 +747,9 @@ export default function App() {
                 {currentL3.task}
               </div>
             </div>
-            <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',width:'100%',padding:'0 1.5rem',marginTop:'-28px',position:'relative',zIndex:10}}>
+            <div style={{textAlign:'center',fontSize:'.7rem',fontWeight:800,letterSpacing:'.12em',textTransform:'uppercase',color:'var(--amber)',marginTop:'.75rem',marginBottom:'.5rem'}}>← swipe →</div>
+            <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',width:'100%',padding:'0 1.5rem'}}>
               <button className="swbtn swno" onClick={()=>handleL3Swipe(false)}>✗</button>
-              <div style={{textAlign:'center',fontSize:'.55rem',fontWeight:800,letterSpacing:'.1em',textTransform:'uppercase',color:'var(--muted)',opacity:.55,lineHeight:1.5}}>
-                <div>← swipe →</div>
-              </div>
               <button className="swbtn swyes" onClick={()=>handleL3Swipe(true)}>✓</button>
             </div>
           </div>
@@ -776,7 +774,7 @@ export default function App() {
           <div className="lhrow">
             <span className="stamp" style={{background:'var(--sky)',color:'#fff',borderColor:'rgba(26,18,8,.5)'}}>Level 4 — Vibe Budget</span>
             <div style={{display:'flex',alignItems:'center',gap:'.6rem'}}>
-              <button onClick={()=>setShowL4Hint(h=>!h)} style={{display:'flex',alignItems:'center',gap:'.3rem',padding:'.3rem .75rem',borderRadius:99,border:'2px solid var(--ink)',background:showL4Hint?'var(--amber)':'var(--paper)',color:showL4Hint?'#fff':'var(--ink)',cursor:'pointer',fontSize:'.7rem',fontWeight:800,boxShadow:'var(--s1)',transition:'background .2s,color .2s,transform .15s,box-shadow .15s',flexShrink:0,letterSpacing:'.04em'}} onMouseEnter={e=>{e.currentTarget.style.transform='translate(-1px,-1px)';e.currentTarget.style.boxShadow='3px 3px 0 var(--ink)'}} onMouseLeave={e=>{e.currentTarget.style.transform='';e.currentTarget.style.boxShadow='var(--s1)'}}>💡 Hint</button>
+              <button onClick={()=>setShowL4Hint(h=>!h)} style={{width:32,height:32,borderRadius:'50%',border:'2px solid var(--ink)',background:showL4Hint?'var(--amber)':'var(--paper)',color:showL4Hint?'#fff':'var(--ink)',cursor:'pointer',fontSize:'1rem',boxShadow:'var(--s1)',transition:'background .2s,color .2s',flexShrink:0,display:'flex',alignItems:'center',justifyContent:'center'}}>💡</button>
               <span className={`bbudget ${budget===0?'empty':''}`}>💰 {displayBudget} credits</span>
             </div>
           </div>
